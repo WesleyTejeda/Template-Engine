@@ -14,6 +14,7 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 addMember();
+let employeeArr = [];
 function addMember(){
     inquirer.prompt([
         {
@@ -33,7 +34,7 @@ function addMember(){
             inquirer.prompt([
                 {
                     type: "input",
-                    message: "Enter the following respectively: Manager's: Name ID Email Office#",
+                    message: "Enter the following info for new manager respectively: Name ID Email Office#",
                     name: "info"
                 }
             ]).then(function(resp){
@@ -46,6 +47,7 @@ function addMember(){
                 obj.officeNumber = placeHolder[3];
                 const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
                 console.log(person);
+                employeeArr.push(person);
                 addMember();
             })
             
@@ -67,6 +69,7 @@ function addMember(){
                 obj.github = placeHolder[3];
                 const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
                 console.log(person);
+                employeeArr.push(person);
                 addMember();
             })
         }
@@ -74,7 +77,7 @@ function addMember(){
             inquirer.prompt([
                 {
                     type: "input",
-                    message: "Enter the following respectively: Manager's: Name ID Email School",
+                    message: "Enter the following info for new intern respectively: Name ID Email School",
                     name: "info"
                 }
             ]).then(function(resp){
@@ -87,11 +90,12 @@ function addMember(){
                 obj.school = placeHolder[3];
                 const person = new Intern(obj.name, obj.id, obj.email, obj.school);
                 console.log(person);
+                employeeArr.push(person);
                 addMember();
             })
         }
         if(resp.role === "Exit")
-            return null;
+            console.log(employeeArr);
     });
 }
 // After the user has input all employees desired, call the `render` function (required
