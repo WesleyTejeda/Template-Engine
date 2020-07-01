@@ -10,13 +10,11 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
 let employeeArr = [];
 let managerCreated = false;
 init();
 function init(){
+    //Entry prompt
     inquirer.prompt([
         {
             type: "rawlist",
@@ -34,6 +32,7 @@ function init(){
             if(!managerCreated){
                 managerInfo();
                 function managerInfo(){
+                    //Manager prompt
                     inquirer.prompt([
                         {
                             type: "input",
@@ -41,17 +40,20 @@ function init(){
                             name: "info"
                         }
                     ]).then(function(resp){
+                        //Creates an object with properties based on user input and pushes to our employee array.
                         let obj = {};
                         let placeHolder = resp.info.split(" ");
                         obj.name = placeHolder[0];
                         obj.id = placeHolder[1] || "empty";
                         obj.email = placeHolder[2] || "empty";
                         obj.officeNumber = placeHolder[3] || "empty";
+                        //Checks validation for format and undefined answers. Routes back to info submission if not formatted correctly
                         if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || !(obj.officeNumber.match(/^[1-9]\d*$/))){
                             console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager with the correct format.");
                             managerInfo();
                         }
                         else {
+                            //Creates new instance and pushes to array if formatted correctly. Routes back to main prompt.
                             const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
                             employeeArr.push(person);
                             managerCreated = true;
@@ -75,17 +77,20 @@ function init(){
                         name: "info"
                     }
                 ]).then(function(resp){
+                    //Creates an object with properties based on user input and pushes to our employee array.
                     let obj = {};
                     let placeHolder = resp.info.split(" ");
                     obj.name = placeHolder[0];
                     obj.id = placeHolder[1] || "empty";
                     obj.email = placeHolder[2] || "empty";
                     obj.github = placeHolder[3] || "empty";
+                    //Checks validation for format and undefined answers. Routes back to info submission if not formatted correctly
                     if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || obj.github == "empty"){
                         console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for engineer with the correct format.");
                         engineerInfo();
                     }
                     else {
+                        //Creates new instance and pushes to array if formatted correctly. Routes back to main prompt.
                         const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
                         employeeArr.push(person);
                         managerCreated = true;
@@ -104,17 +109,20 @@ function init(){
                         name: "info"
                     }
                 ]).then(function(resp){
+                    //Creates an object with properties based on user input and pushes to our employee array.
                     let obj = {};
                     let placeHolder = resp.info.split(" ");
                     obj.name = placeHolder[0];
                     obj.id = placeHolder[1] || "empty";
                     obj.email = placeHolder[2] || "empty";
                     obj.school = placeHolder[3];
+                    //Checks validation for format and undefined answers. Routes back to info submission if not formatted correctly
                     if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || obj.school == undefined){
                         console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for intern with the correct format.");
                         internInfo();
                     }
                     else {
+                        //Creates new instance and pushes to array if formatted correctly. Routes back to main prompt.
                         const person = new Intern(obj.name, obj.id, obj.email, obj.school);
                         employeeArr.push(person);
                         managerCreated = true;
@@ -124,14 +132,12 @@ function init(){
             }
         }
         if(resp.role === "Exit"){
+            //Breaks recursive prompt
             console.log("Exiting input. Generating HTML...");
             generateHTML();
         }
     });
 }
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
 
 //Generates HTML based on members created
 function generateHTML(){
@@ -141,31 +147,18 @@ function generateHTML(){
     writeToFile(html);
 }
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
 
 //Takes in html markup and creates html file
 function writeToFile(html){
+    //If output directory exists, write to it
     if(fs.existsSync(OUTPUT_DIR)){
         fs.writeFile(outputPath, html, (err) => {
             if (err)
                 throw err;
-            else return "Successfully created and wrote to HTML file. Open the file team.html to view webpage.";
+            else console.log("Successfully created and wrote to HTML file. Open the file team.html to view webpage.");
         })
     }
+    //If output directory doesn't exist, create it then call writeToFile again.
     else {
         fs.mkdirSync(OUTPUT_DIR);
         writeToFile(html);
