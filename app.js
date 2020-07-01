@@ -37,18 +37,18 @@ function init(){
                     inquirer.prompt([
                         {
                             type: "input",
-                            message: "Enter the following info for new manager respectively: Name ID Email Office#",
+                            message: "Enter the following info for new manager respectively: Name ID# Email:(sample@mail.com) Office#",
                             name: "info"
                         }
                     ]).then(function(resp){
                         let obj = {};
                         let placeHolder = resp.info.split(" ");
                         obj.name = placeHolder[0];
-                        obj.id = placeHolder[1];
-                        obj.email = placeHolder[2];
-                        obj.officeNumber = placeHolder[3];
-                        if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.officeNumber == undefined){
-                            console.log("You've left some fields empty. Please re-enter the information for manager.");
+                        obj.id = placeHolder[1] || "empty";
+                        obj.email = placeHolder[2] || "empty";
+                        obj.officeNumber = placeHolder[3] || "empty";
+                        if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || !(obj.officeNumber.match(/^[1-9]\d*$/))){
+                            console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager in this format: Name ID# email:(sample@mail.com) Office#");
                             managerInfo();
                         }
                         else {
@@ -71,18 +71,18 @@ function init(){
                 inquirer.prompt([
                     {
                         type: "input",
-                        message: "Enter the following info for new manager respectively: Name ID Email GithubUserName",
+                        message: "Enter the following info for new manager respectively: Name ID Email:(sample@mail.com) GithubUserName",
                         name: "info"
                     }
                 ]).then(function(resp){
                     let obj = {};
                     let placeHolder = resp.info.split(" ");
                     obj.name = placeHolder[0];
-                    obj.id = placeHolder[1];
-                    obj.email = placeHolder[2];
-                    obj.github = placeHolder[3];
-                    if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.github == undefined){
-                        console.log("You've left some fields empty. Please re-enter the information for engineer.");
+                    obj.id = placeHolder[1] || "empty";
+                    obj.email = placeHolder[2] || "empty";
+                    obj.github = placeHolder[3] || "empty";
+                    if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || obj.github == "empty"){
+                        console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for engineer in this format: Name ID# email:(sample@mail.com) GithubUserName");
                         engineerInfo();
                     }
                     else {
@@ -100,18 +100,18 @@ function init(){
                 inquirer.prompt([
                     {
                         type: "input",
-                        message: "Enter the following info for new intern respectively: Name ID Email School",
+                        message: "Enter the following info for new intern respectively: Name ID Email:(sample@mail.com) School",
                         name: "info"
                     }
                 ]).then(function(resp){
                     let obj = {};
                     let placeHolder = resp.info.split(" ");
                     obj.name = placeHolder[0];
-                    obj.id = placeHolder[1];
-                    obj.email = placeHolder[2];
+                    obj.id = placeHolder[1] || "empty";
+                    obj.email = placeHolder[2] || "empty";
                     obj.school = placeHolder[3];
-                    if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.school == undefined){
-                        console.log("You've left some fields empty. Please re-enter the information for engineer.");
+                    if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || obj.school == undefined){
+                        console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager in this format: Name ID# email:(sample@mail.com) School");
                         internInfo();
                     }
                     else {
