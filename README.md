@@ -1,5 +1,6 @@
 # Template-Engine
-
+by ```Wesley Tejeda```
+Repository Link: https://github.com/WesleyTejeda/Template-Engine
 ## Description
 This repository houses an app that can generate a html file to display the roles and information of a team based on user input.
 
