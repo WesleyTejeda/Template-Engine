@@ -159,9 +159,15 @@ function generateHTML(){
 
 //Takes in html markup and creates html file
 function writeToFile(html){
-    fs.writeFile("team.html", html, (err) => {
-        if (err)
-            throw err;
-        else return "Successfully created and wrote to HTML file. Open the file team.html to view webpage.";
-    })
+    if(fs.existsSync(OUTPUT_DIR)){
+        fs.writeFile(outputPath, html, (err) => {
+            if (err)
+                throw err;
+            else return "Successfully created and wrote to HTML file. Open the file team.html to view webpage.";
+        })
+    }
+    else {
+        fs.mkdirSync(OUTPUT_DIR);
+        writeToFile(html);
+    }   
 }
