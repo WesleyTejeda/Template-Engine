@@ -14,7 +14,9 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 let employeeArr = [];
-function Init(){
+let managerCreated = false;
+init();
+function init(){
     inquirer.prompt([
         {
             type: "rawlist",
@@ -29,24 +31,32 @@ function Init(){
         },
     ]).then(function(resp){
         if (resp.role === "Manager"){
-            inquirer.prompt([
-                {
-                    type: "input",
-                    message: "Enter the following info for new manager respectively: Name ID Email Office#",
-                    name: "info"
-                }
-            ]).then(function(resp){
-                let obj = {};
-                let placeHolder = resp.info.split(" ");
-                obj.name = placeHolder[0];
-                obj.id = placeHolder[1];
-                obj.email = placeHolder[2];
-                obj.officeNumber = placeHolder[3];
-                const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
-                employeeArr.push(person);
-                Init();
-            })
-            
+            if(!managerCreated){
+                inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "Enter the following info for new manager respectively: Name ID Email Office#",
+                        name: "info"
+                    }
+                ]).then(function(resp){
+                    if(!managerCreated){
+                        let obj = {};
+                        let placeHolder = resp.info.split(" ");
+                        obj.name = placeHolder[0];
+                        obj.id = placeHolder[1];
+                        obj.email = placeHolder[2];
+                        obj.officeNumber = placeHolder[3];
+                        const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
+                        employeeArr.push(person);
+                        managerCreated = true;
+                    }
+                    init();
+                }) 
+            }
+            else {
+                console.log("Manager already created.");
+                init();
+            }
         }
         if (resp.role === "Engineer"){
             inquirer.prompt([
@@ -64,7 +74,7 @@ function Init(){
                 obj.github = placeHolder[3];
                 const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
                 employeeArr.push(person);
-                Init();
+                init();
             })
         }
         if (resp.role === "Intern"){
@@ -83,7 +93,7 @@ function Init(){
                 obj.school = placeHolder[3];
                 const person = new Intern(obj.name, obj.id, obj.email, obj.school);
                 employeeArr.push(person);
-                Init();
+                init();
             })
         }
         if(resp.role === "Exit"){
@@ -91,7 +101,6 @@ function Init(){
             console.log(employeeArr);
 
             console.log("Rendering!");
-            // return render(employeeArr);
             generateHTML();
         }
     });
@@ -100,8 +109,7 @@ function Init(){
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-//
-Init();
+//Generates HTML based on members created
 function generateHTML(){
     let html = render(employeeArr);
     console.log(html);
@@ -114,13 +122,7 @@ function generateHTML(){
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-function writeToFile(html){
-    fs.writeFile("team.html", html, (err) => {
-        if (err)
-            throw err;
-        else return "Successfully created and wrote to HTML file";
-    })
-}
+
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
@@ -130,3 +132,12 @@ function writeToFile(html){
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+//Takes in html markup and creates html file
+function writeToFile(html){
+    fs.writeFile("team.html", html, (err) => {
+        if (err)
+            throw err;
+        else return "Successfully created and wrote to HTML file. Open the file team.html to view webpage.";
+    })
+}
