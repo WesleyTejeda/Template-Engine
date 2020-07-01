@@ -24,7 +24,7 @@ The test files are:
     ./test/Engineer.test.js
     ./test/Manager.test.js
     ./test/Intern.test.js
-    ./tess/Employee.test.js
+    ./test/Employee.test.js
 
 ## Questions
 Contact me via the email posted below, or message me directly on github.
