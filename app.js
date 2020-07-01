@@ -89,12 +89,12 @@ function addMember(){
         if(resp.role === "Exit"){
             console.log("Exiting input. Generating HTML...");
             console.log(employeeArr);
-            return render(employeeArr);
+            // return render(employeeArr);
 
-            // let html = render(employeeArr);
-            // console.log(html);
-            // console.log("HTML generated!");
-            // return null;
+            let html = render(employeeArr);
+            console.log(html);
+            console.log("HTML generated!");
+            return null;
         }
     });
 }
@@ -102,9 +102,12 @@ function addMember(){
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-let html = addMember();
-console.log(html);
-console.log("HTML generated!");
+// addMember();
+// let html = addMember();
+// console.log(html);
+// console.log("Rendering");
+// console.log(html);
+// console.log("HTML generated!");
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
