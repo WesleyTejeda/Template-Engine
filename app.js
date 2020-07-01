@@ -150,17 +150,13 @@ function generateHTML(){
 
 //Takes in html markup and creates html file
 function writeToFile(html){
-    //If output directory exists, write to it
-    if(fs.existsSync(OUTPUT_DIR)){
-        fs.writeFile(outputPath, html, (err) => {
-            if (err)
-                throw err;
-            else console.log("Successfully created and wrote to HTML file. Open the file team.html to view webpage.");
-        })
-    }
-    //If output directory doesn't exist, create it then call writeToFile again.
-    else {
+    //If output directory doesn't exist, create it 
+    if(!(fs.existsSync(OUTPUT_DIR)))
         fs.mkdirSync(OUTPUT_DIR);
-        writeToFile(html);
-    }   
+    //Write
+    fs.writeFile(outputPath, html, (err) => {
+        if (err)
+            throw err;
+        else console.log("Successfully created and wrote to HTML file. Open the file team.html to view webpage.");
+    })
 }
