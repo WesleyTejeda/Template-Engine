@@ -32,10 +32,46 @@ function init(){
     ]).then(function(resp){
         if (resp.role === "Manager"){
             if(!managerCreated){
+                managerInfo();
+                function managerInfo(){
+                    inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "Enter the following info for new manager respectively: Name ID Email Office#",
+                            name: "info"
+                        }
+                    ]).then(function(resp){
+                        let obj = {};
+                        let placeHolder = resp.info.split(" ");
+                        obj.name = placeHolder[0];
+                        obj.id = placeHolder[1];
+                        obj.email = placeHolder[2];
+                        obj.officeNumber = placeHolder[3];
+                        if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.officeNumber == undefined){
+                            console.log("You've left some fields empty. Please re-enter the information for manager.");
+                            managerInfo();
+                        }
+                        else {
+                            const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
+                            employeeArr.push(person);
+                            managerCreated = true;
+                            init();
+                        }
+                    })
+                }
+            }
+            else {
+                console.log("Manager already created.");
+                init();
+            }
+        }
+        if (resp.role === "Engineer"){
+            engineerInfo();
+            function engineerInfo(){
                 inquirer.prompt([
                     {
                         type: "input",
-                        message: "Enter the following info for new manager respectively: Name ID Email Office#",
+                        message: "Enter the following info for new manager respectively: Name ID Email GithubUserName",
                         name: "info"
                     }
                 ]).then(function(resp){
@@ -44,55 +80,48 @@ function init(){
                     obj.name = placeHolder[0];
                     obj.id = placeHolder[1];
                     obj.email = placeHolder[2];
-                    obj.officeNumber = placeHolder[3];
-                    const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
-                    employeeArr.push(person);
-                    managerCreated = true;
-                    init();
-                }) 
+                    obj.github = placeHolder[3];
+                    if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.github == undefined){
+                        console.log("You've left some fields empty. Please re-enter the information for engineer.");
+                        engineerInfo();
+                    }
+                    else {
+                        const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
+                        employeeArr.push(person);
+                        managerCreated = true;
+                        init();
+                    }
+                });
             }
-            else {
-                console.log("Manager already created.");
-                init();
-            }
-        }
-        if (resp.role === "Engineer"){
-            inquirer.prompt([
-                {
-                    type: "input",
-                    message: "Enter the following info for new engineer respectively: `Name` `ID` `Email` `GithubUserName`",
-                    name: "info"
-                }
-            ]).then(function(resp){
-                let obj = {};
-                let placeHolder = resp.info.split(" ");
-                obj.name = placeHolder[0];
-                obj.id = placeHolder[1];
-                obj.email = placeHolder[2];
-                obj.github = placeHolder[3];
-                const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
-                employeeArr.push(person);
-                init();
-            })
         }
         if (resp.role === "Intern"){
-            inquirer.prompt([
-                {
-                    type: "input",
-                    message: "Enter the following info for new intern respectively: Name ID Email School",
-                    name: "info"
-                }
-            ]).then(function(resp){
-                let obj = {};
-                let placeHolder = resp.info.split(" ");
-                obj.name = placeHolder[0];
-                obj.id = placeHolder[1];
-                obj.email = placeHolder[2];
-                obj.school = placeHolder[3];
-                const person = new Intern(obj.name, obj.id, obj.email, obj.school);
-                employeeArr.push(person);
-                init();
-            })
+            internInfo();
+            function internInfo(){
+                inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "Enter the following info for new intern respectively: Name ID Email School",
+                        name: "info"
+                    }
+                ]).then(function(resp){
+                    let obj = {};
+                    let placeHolder = resp.info.split(" ");
+                    obj.name = placeHolder[0];
+                    obj.id = placeHolder[1];
+                    obj.email = placeHolder[2];
+                    obj.school = placeHolder[3];
+                    if(obj.name == undefined || obj.id == undefined || obj.email == undefined || obj.school == undefined){
+                        console.log("You've left some fields empty. Please re-enter the information for engineer.");
+                        internInfo();
+                    }
+                    else {
+                        const person = new Intern(obj.name, obj.id, obj.email, obj.school);
+                        employeeArr.push(person);
+                        managerCreated = true;
+                        init();
+                    }
+                });
+            }
         }
         if(resp.role === "Exit"){
             console.log("Exiting input. Generating HTML...");
