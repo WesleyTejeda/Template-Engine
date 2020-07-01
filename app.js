@@ -88,6 +88,7 @@ function addMember(){
         }
         if(resp.role === "Exit"){
             console.log("Exiting input. Generating HTML...");
+            console.log(employeeArr);
             return render(employeeArr);
 
             // let html = render(employeeArr);
