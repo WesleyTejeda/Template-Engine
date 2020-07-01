@@ -17,13 +17,14 @@ Pull requests are allowed. Please create an issue for any new ideas or bug fixes
 
 ## Tests
 This application has passed the all tests included. Please run ```npm test``` after installation.
+The tests are in the ```./test``` folder.
 
 The test files are: 
 
-    ./tests/Engineer.test.js
-    ./tests/Manager.test.js
-    ./tests/Intern.test.js
-    ./tests/Employee.test.js
+    ./test/Engineer.test.js
+    ./test/Manager.test.js
+    ./test/Intern.test.js
+    ./test/Employee.test.js
 
 ## Questions
 Contact me via the email posted below, or message me directly on github.
