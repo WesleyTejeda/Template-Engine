@@ -39,17 +39,15 @@ function init(){
                         name: "info"
                     }
                 ]).then(function(resp){
-                    if(!managerCreated){
-                        let obj = {};
-                        let placeHolder = resp.info.split(" ");
-                        obj.name = placeHolder[0];
-                        obj.id = placeHolder[1];
-                        obj.email = placeHolder[2];
-                        obj.officeNumber = placeHolder[3];
-                        const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
-                        employeeArr.push(person);
-                        managerCreated = true;
-                    }
+                    let obj = {};
+                    let placeHolder = resp.info.split(" ");
+                    obj.name = placeHolder[0];
+                    obj.id = placeHolder[1];
+                    obj.email = placeHolder[2];
+                    obj.officeNumber = placeHolder[3];
+                    const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
+                    employeeArr.push(person);
+                    managerCreated = true;
                     init();
                 }) 
             }
