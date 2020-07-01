@@ -98,9 +98,6 @@ function init(){
         }
         if(resp.role === "Exit"){
             console.log("Exiting input. Generating HTML...");
-            console.log(employeeArr);
-
-            console.log("Rendering!");
             generateHTML();
         }
     });
@@ -112,7 +109,7 @@ function init(){
 //Generates HTML based on members created
 function generateHTML(){
     let html = render(employeeArr);
-    console.log(html);
+    console.log("Rendering!");
     console.log("HTML generated!");
     writeToFile(html);
 }
