@@ -48,7 +48,7 @@ function init(){
                         obj.email = placeHolder[2] || "empty";
                         obj.officeNumber = placeHolder[3] || "empty";
                         if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || !(obj.officeNumber.match(/^[1-9]\d*$/))){
-                            console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager in this format with the correct format.");
+                            console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager with the correct format.");
                             managerInfo();
                         }
                         else {
@@ -111,7 +111,7 @@ function init(){
                     obj.email = placeHolder[2] || "empty";
                     obj.school = placeHolder[3];
                     if(obj.name == undefined || !(obj.id.match(/^[1-9]\d*$/)) || !(obj.email.match(/\S+@\S+\.\S+/)) || obj.school == undefined){
-                        console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for manager with the correct format.");
+                        console.log("You've left some fields empty or entered the wrong format. Please re-enter the information for intern with the correct format.");
                         internInfo();
                     }
                     else {
