@@ -13,7 +13,6 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-addMember();
 let employeeArr = [];
 function addMember(){
     inquirer.prompt([
@@ -29,7 +28,6 @@ function addMember(){
             ]
         },
     ]).then(function(resp){
-        console.log(resp);
         if (resp.role === "Manager"){
             inquirer.prompt([
                 {
@@ -38,7 +36,6 @@ function addMember(){
                     name: "info"
                 }
             ]).then(function(resp){
-                console.log(resp);
                 let obj = {};
                 let placeHolder = resp.info.split(" ");
                 obj.name = placeHolder[0];
@@ -46,7 +43,6 @@ function addMember(){
                 obj.email = placeHolder[2];
                 obj.officeNumber = placeHolder[3];
                 const person = new Manager(obj.name, obj.id, obj.email, obj.officeNumber);
-                console.log(person);
                 employeeArr.push(person);
                 addMember();
             })
@@ -60,7 +56,6 @@ function addMember(){
                     name: "info"
                 }
             ]).then(function(resp){
-                console.log(resp);
                 let obj = {};
                 let placeHolder = resp.info.split(" ");
                 obj.name = placeHolder[0];
@@ -68,7 +63,6 @@ function addMember(){
                 obj.email = placeHolder[2];
                 obj.github = placeHolder[3];
                 const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
-                console.log(person);
                 employeeArr.push(person);
                 addMember();
             })
@@ -81,7 +75,6 @@ function addMember(){
                     name: "info"
                 }
             ]).then(function(resp){
-                console.log(resp);
                 let obj = {};
                 let placeHolder = resp.info.split(" ");
                 obj.name = placeHolder[0];
@@ -89,18 +82,28 @@ function addMember(){
                 obj.email = placeHolder[2];
                 obj.school = placeHolder[3];
                 const person = new Intern(obj.name, obj.id, obj.email, obj.school);
-                console.log(person);
                 employeeArr.push(person);
                 addMember();
             })
         }
-        if(resp.role === "Exit")
-            console.log(employeeArr);
+        if(resp.role === "Exit"){
+            console.log("Exiting input. Generating HTML...");
+            return render(employeeArr);
+
+            // let html = render(employeeArr);
+            // console.log(html);
+            // console.log("HTML generated!");
+            // return null;
+        }
     });
 }
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+let html = addMember();
+console.log(html);
+console.log("HTML generated!");
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
