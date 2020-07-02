@@ -93,7 +93,6 @@ function init(){
                         //Creates new instance and pushes to array if formatted correctly. Routes back to main prompt.
                         const person = new Engineer(obj.name, obj.id, obj.email, obj.github);
                         employeeArr.push(person);
-                        managerCreated = true;
                         init();
                     }
                 });
@@ -125,7 +124,6 @@ function init(){
                         //Creates new instance and pushes to array if formatted correctly. Routes back to main prompt.
                         const person = new Intern(obj.name, obj.id, obj.email, obj.school);
                         employeeArr.push(person);
-                        managerCreated = true;
                         init();
                     }
                 });
