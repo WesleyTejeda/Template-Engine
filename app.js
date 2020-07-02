@@ -73,7 +73,7 @@ function init(){
                 inquirer.prompt([
                     {
                         type: "input",
-                        message: "Enter the following info for new manager respectively: Name ID Email:(sample@mail.com) GithubUserName",
+                        message: "Enter the following info for new engineer respectively: Name ID Email:(sample@mail.com) GithubUserName",
                         name: "info"
                     }
                 ]).then(function(resp){
