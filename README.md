@@ -4,6 +4,10 @@ Repository Link: https://github.com/WesleyTejeda/Template-Engine
 ## Description
 This repository houses an app that can generate a html file to display the roles and information of a team based on user input. Be aware, user input will be tested for formatting inconsistencies.
 
+## Demo
+Click on the thumbnail below to view the demo.
+[![Watch the demo](https://img.youtube.com/vi/qhtJQA2xHu8/hqdefault.jpg)](https://youtu.be/qhtJQA2xHu8)
+
 ## Installation
 Install using ```npm install```
 
